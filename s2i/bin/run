@@ -2,7 +2,6 @@
 
 CONFIG_FILE=$JBOSS_HOME/standalone/configuration/standalone-openshift.xml
 LOGGING_FILE=$JBOSS_HOME/standalone/configuration/logging.properties
-HORNETQ_SUBSYSTEM_FILE=$JBOSS_HOME/bin/hornetq-subsystem
 
 . $JBOSS_HOME/bin/messaging-config.sh
 

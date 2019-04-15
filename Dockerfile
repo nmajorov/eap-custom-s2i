@@ -8,8 +8,7 @@ COPY s2i/bin/tx-datasource.sh $JBOSS_HOME/bin/launch/tx-datasource.sh
 
 
 ADD modules/com/    /opt/eap/modules/com/
-ADD configuration/settings.xml /home/jboss/.m2/settings.xml
-ADD configuration/standalone-openshift.xml $JBOSS_HOME/standalone/configuration/standalone-openshift.xml
+
 
 LABEL com.redhat.deployments-dir="/opt/eap/standalone/deployments" \
       io.k8s.description="Vladi  EAP 7.2" \
@@ -18,4 +17,3 @@ LABEL com.redhat.deployments-dir="/opt/eap/standalone/deployments" \
       io.openshift.s2i.scripts-url="image:///usr/local/s2i" \
       io.openshift.tags="builder,javaee,eap,eap6" \
       org.jboss.deployments-dir="/opt/eap/standalone/deployments"
-
