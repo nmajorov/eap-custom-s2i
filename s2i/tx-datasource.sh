@@ -154,6 +154,11 @@ function inject_tx_datasource() {
         datasource="$(generate_tx_datasource ${service,,} $jndi $username $password $host $port $database $driver)\n"
         inject_jdbc_store "${jndi}ObjectStore"
         ;;
+      "ORACLE")
+        driver="oracle"
+        datasource="$(generate_tx_datasource ${service,,} $jndi $username $password $host $port $database $driver)\n"
+        inject_jdbc_store "${jndi}ObjectStore"
+        ;;
       *)
         datasource=""
         ;;

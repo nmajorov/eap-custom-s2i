@@ -5,11 +5,10 @@ ENV TZ Europe/Amsterdam
 
 COPY s2i/datasource-common.sh    $JBOSS_HOME/bin/launch/datasource-common.sh
 COPY s2i/tx-datasource.sh $JBOSS_HOME/bin/launch/tx-datasource.sh
-
+COPY configuration/standalone-openshift.xml $JBOSS_HOME/standalone/configuration/standalone-openshift.xml
 
 ADD modules/com/    /opt/eap/modules/com/
 
-ADD configuration/standalone-openshift.xml $JBOSS_HOME/standalone/configuration/standalone-openshift.xml
 
 
 LABEL com.redhat.deployments-dir="/opt/eap/standalone/deployments" \

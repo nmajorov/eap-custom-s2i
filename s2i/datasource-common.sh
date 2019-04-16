@@ -136,6 +136,8 @@ function inject_external_datasources() {
         db="POSTGRESQL"
       elif [ "$driver" == "mysql" ]; then
         db="MYSQL"
+      elif [ "$driver" == "oracle" ]; then
+        db="ORACLE"
       else
         db="EXTERNAL"
       fi
@@ -221,7 +223,7 @@ function generate_external_datasource() {
   else
     ds=" <xa-datasource jndi-name=\"${jndi_name}\" pool-name=\"${pool_name}\" enabled=\"true\" use-java-context=\"true\">"
     local xa_props=$(compgen -v | grep -s "${prefix}_XA_CONNECTION_PROPERTY_")
-    if [ -z "$xa_props" ] && [ "$driver" != "postgresql" ] && [ "$driver" != "mysql" ]; then
+    if [ -z "$xa_props" ] && [ "$driver" != "postgresql" ] && [ "$driver" != "mysql" ] && [ "$driver" != "oracle" ]; then
       log_warning "At least one ${prefix}_XA_CONNECTION_PROPERTY_property for datasource ${service_name} is required. Datasource will not be configured."
       failed="true"
     else
@@ -496,6 +498,14 @@ function inject_datasource() {
       checker="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"
       sorter="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"
       ;;
+      "ORACLE")
+        map_properties "jdbc:oracle:thin:@" "${prefix}_XA_CONNECTION_PROPERTY_ServerName" "${prefix}_XA_CONNECTION_PROPERTY_PortNumber" "${prefix}_XA_CONNECTION_PROPERTY_DatabaseName"
+
+        driver="oracle"
+        validate="false"
+        checker="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker"
+        sorter="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleStaleConnectionChecker"
+        ;;
     "MONGODB")
       continue
       ;;
