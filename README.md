@@ -19,12 +19,29 @@ The <database_type> will determine the driver for the datasource.
 
 The jboss_eap only supports postgresql and mysql, i added oracle.
 
-Oracle driver example  configuration:
+Oracle pool/driver XA example  configuration:
+
+
+
+                  <xa-datasource jndi-name="java:jboss/datasources/TodoListDS"
+                    pool-name="todo_oracle-DB" enabled="true"
+                    use-java-context="true">
+                   <xa-datasource-property name="URL">jdbc:oracle:thin:@localhost:1521:XE</xa-datasource-property>
+                    <driver>oracle</driver>
+                     <xa-pool>
+                        <min-pool-size>1</min-pool-size>
+                        <max-pool-size>2</max-pool-size>
+                      </xa-pool>
+                      <security>
+                       <user-name>system</user-name>
+                        <password>oracle</password>
+                        </security>
+                  </xa-datasource>
+
 
                   <driver name="oracle" module="com.oracle">
                     <xa-datasource-class>oracle.jdbc.xa.client.OracleXADataSource</xa-datasource-class>
                   </driver>  
-
 
 ## Build image locally
 
@@ -38,10 +55,13 @@ Install the S2I tool from the Red Hat Software Collections repository:
 
       yum install source-to-image
 
-      s2i build  -e oracle_DRIVER_NAME=oracle \
-      -e oracle_DRIVER_CLASS=oracle.jdbc.xa.client.OracleXADataSource \
-       -e DATABASETYPE=oracle -e oracle_USERNAME=system \
-      -e oracle_PASSWORD=oracle -e oracle_JNDI=java:jboss/datasources/TodoListDS \
-      -e oracle_URL=jdbc:oracle:thin:@localhost:1521:XE \
-        https://github.com/nmajorov/html5-frontend-sso.git \
-        majorov.biz/eap72  rh-eap72-app  
+Example of adding  XA oracle pool:
+
+
+
+        s2i build -e DB_SERVICE_PREFIX_MAPPING=TODO-oracle=DB -e DB_DRIVER_NAME=oracle -e DB_USERNAME=system \
+        -e DB_PASSWORD=oracle -e  DB_JNDI=java:jboss/datasources/TodoListDS  \
+        -e DB_MIN_POOL_SIZE=1  -e DB_MAX_POOL_SIZE=2 \
+        -e  DB_XA_CONNECTION_PROPERTY_URL=jdbc:oracle:thin:@localhost:1521:XE \
+          https://github.com/nmajorov/html5-frontend-sso.git \
+          majorov.biz/eap72  rh-eap72-app

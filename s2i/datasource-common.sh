@@ -132,6 +132,7 @@ function inject_external_datasources() {
   if [ -n "$DATASOURCES" ]; then
     for datasource_prefix in $(echo $DATASOURCES | sed "s/,/ /g"); do
       driver=$(find_env "${datasource_prefix}_DRIVER" )
+      echo "***** $driver"
       if [ "$driver" == "postgresql" ]; then
         db="POSTGRESQL"
       elif [ "$driver" == "mysql" ]; then

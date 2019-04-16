@@ -36,7 +36,7 @@ function clearTxDatasourceEnv() {
 # $7 - datasource databasename
 # $8 - driver
 function generate_tx_datasource() {
-
+   echo "***** generate_tx_datasource  datasource jndi name: ${3} username: ${2} **************"
   ds="                  <datasource jta=\"false\" jndi-name=\"${2}ObjectStore\" pool-name=\"${1}ObjectStorePool\" enabled=\"true\">
                       <connection-url>jdbc:${8}://${5}:${6}/${7}</connection-url>
                       <driver>${8}</driver>"
@@ -155,8 +155,10 @@ function inject_tx_datasource() {
         inject_jdbc_store "${jndi}ObjectStore"
         ;;
       "ORACLE")
+        log_warning "db is oracle db"
         driver="oracle"
         datasource="$(generate_tx_datasource ${service,,} $jndi $username $password $host $port $database $driver)\n"
+        log_warning "datasource $datasource"
         inject_jdbc_store "${jndi}ObjectStore"
         ;;
       *)
