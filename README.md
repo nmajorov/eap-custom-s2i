@@ -5,7 +5,13 @@ This uses jboss-eap-openshift docker image and adds support for the Oracle JDBC 
 
 - Modified standalone-openshift.xml to include the Oracle Driver
 - Modified s2i/run script to include type "ORACLE" datasource type.
-- Added flyway as a pre-hook to the RollingUpdate deployment-strategy in the examples/sample-app-dc-flyway.yml deploymentconfig object.
+
+
+time is passing by and a very  good read about s2i eap 7 image on openshift you can find here: 
+https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html-single/getting_started_with_jboss_eap_for_openshift_container_platform/index#eap_s2i_process
+
+Many of this instruction is not requried anymore.
+
 
 
 # Service Discovery
