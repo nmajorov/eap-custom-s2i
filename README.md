@@ -1,4 +1,5 @@
-# jboss eap openshift s2i 7.2 add oracle datasource plus driver installation
+# jboss eap openshift s2i 7.2 
+# oracle datasource plus driver installation
 
 This uses jboss-eap-openshift docker image and adds support for the Oracle JDBC driver as a jboss module
 
